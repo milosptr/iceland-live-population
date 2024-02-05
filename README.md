@@ -12,3 +12,5 @@ This simple HTML application displays the live population count of Iceland, fetc
 
 The application makes a GET request to a specified URL (`https://ths_talnaefni.skra.is/ths_talnaefni/v1/fjoldiibua?svfn=9999`) to fetch the latest
 
+## Live preview on
+[https://iceland-live-population.vercel.app](https://iceland-live-population.vercel.app)
