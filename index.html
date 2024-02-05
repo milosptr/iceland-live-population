@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Population of Iceland</title>
+  <style>
+    body {
+      background-color: #020350;
+      color: #4ff5b4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: "Courier New", monospace;
+    }
+    .population {
+      font-size: 3em;
+      text-align: center;
+    }
+    #number {
+      font-size: 7em;
+      margin-top: 0em;
+      font-weight: bold;
+    }
+    .disclaimer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      color: #fff;
+      opacity: 0.3;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+<div class="population" id="population">
+  <div>Population of Iceland</div>
+  <div id="number"></div>
+</div>
+<div class="disclaimer">Live population data fetched every 10 seconds</div>
+<script>
+  async function fetchPopulation() {
+    const url = 'https://ths_talnaefni.skra.is/ths_talnaefni/v1/fjoldiibua?svfn=9999';
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const latestPopulation = data.sveitarfélög[0].allir.pop(); // Get the last element from the "allir" array
+      document.getElementById('number').textContent = `${latestPopulation}`;
+    } catch (error) {
+      console.error('Failed to fetch population data:', error);
+      document.getElementById('population').textContent = 'Failed to load data.';
+    }
+  }
+
+  fetchPopulation(); // Initial fetch
+  setInterval(fetchPopulation, 10000); // Fetch every 10 seconds
+</script>
+</body>
+</html>
+
